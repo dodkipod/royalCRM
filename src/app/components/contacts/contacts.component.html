@@ -1,0 +1,45 @@
+<app-page-header
+  title="contacts"
+  description="company employees details"
+  icon="fas fa-address-book"
+></app-page-header>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <h4>{{ "company employee contact table" | titlecase }}</h4>
+    <table
+      *ngIf="contacts.length; else noContacts"
+      class="table table-bordered mt-3"
+    >
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Birthday</th>
+          <th>Phones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ contact.name | titlecase }}</td>
+          <td>{{ contact.email | lowercase }}</td>
+          <td>{{ contact.birthday | date: "dd/MM/yyyy" }}</td>
+          <td>
+            <ul *ngIf="contact.phones?.length; else noPhones">
+              <li *ngFor="let phone of contact.phones">{{ phone }}</li>
+            </ul>
+            <ng-template #noPhones>
+              <p><i>No Phone Number</i></p></ng-template
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noContacts>
+      <p><i>No Contacts Found</i></p>
+    </ng-template>
+  </div>
+</div>

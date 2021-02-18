@@ -1,0 +1,62 @@
+<app-page-header
+  title="Customers"
+  icon="fas fa-users"
+  description="list of customers"
+></app-page-header>
+
+<div class="row">
+  <div class="col-12">
+    <span class="float-right">
+      <a routerLink="/customers/new" class="btn btn-primary">
+        <i class="fas fa-plus-circle"></i>
+        Add a new customer
+      </a>
+    </span>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <div *ngIf="customers$ | async as customers; else loading">
+      <table
+        *ngIf="customers.length; else noCustomers"
+        class="table table-bordered"
+      >
+        <thead>
+          <tr>
+            <th>#NO</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of customers; index as idx">
+            <td>
+              {{ idx + 1 }}
+              <a [routerLink]="['/customers', customer.id, 'edit']" class="ml-3"
+                ><i class="fas fa-pen"></i
+              ></a>
+              <a class="ml-3" (click)="remove(customer.id)"
+                ><i class="fas fa-trash-alt"></i
+              ></a>
+            </td>
+            <td>
+              <a [routerLink]="['/customers', customer.id]">
+                {{ customer.firstName }}
+              </a>
+            </td>
+            <td>{{ customer.lastName }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noCustomers>
+        <p><i>No Customers</i></p>
+      </ng-template>
+    </div>
+    <ng-template #loading> loading... </ng-template>
+  </div>
+</div>
